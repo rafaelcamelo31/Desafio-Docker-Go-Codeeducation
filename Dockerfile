@@ -4,11 +4,10 @@ WORKDIR /go/src/app
 
 COPY . . 
 
-RUN go get -d -v
-RUN go build -ldflags "-s -w" -o /go/src/app
+RUN go build -ldflags "-s -w" -o /go/hello
 
 FROM scratch
 
-COPY --from=builder /go/src/app .
+COPY --from=builder /go/hello /go/hello
 
-ENTRYPOINT [ "go", "run", "hello-world.go" ]
+ENTRYPOINT [ "/go/hello" ]
