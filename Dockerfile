@@ -1,10 +1,10 @@
-FROM golang:latest
+FROM golang:1.14-alpine AS builder
 
 WORKDIR /go/src/app
 
 COPY . . 
 
-RUN go get -d -v ./...
-RUN go install -v ./...
+RUN go get -d -v
+RUN go build -ldflags "-s -w"
 
-CMD [ "go", "run", "hello-world.go" ]
+ENTRYPOINT [ "go", "run", "hello-world.go" ]
